@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Aviary Escape Room - 360° View</title>
+  <meta name="description" content="360° Aviary Escape Room - A-Frame">
+
+  <!-- A-Frame library - latest stable version from CDN -->
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <!-- A-Frame Extras for FBX support -->
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
+  <!-- lil-gui for layout tool -->
+  <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.19.1/dist/lil-gui.umd.min.js"></script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- 
+    A-Frame scene with device orientation permission UI enabled
+    This allows device gyroscope access on iOS and other browsers that require explicit permission
+  -->
+  <a-scene device-orientation-permission-ui="enabled: true">
+    <!-- 
+      Asset preloading system (recommended by A-Frame for better loading and error handling)
+    -->
+    <a-assets>
+      <img id="aviaryPanorama" src="img/panorama%20aviary%20door.jpg" crossorigin="anonymous">
+
+      <!-- Audio -->
+      <audio id="bgmAudio" src="audio/elevator-jazz-lounge-music-412339.mp3" preload="auto"
+        crossorigin="anonymous"></audio>
+      <audio id="sfx-cage-open" src="audio/SoundQ Audio/Steel Cage Opening(4).wav" preload="auto"
+        crossorigin="anonymous"></audio>
+      <audio id="sfx-birds" src="audio/SoundQ Audio/Birds - 2.wav" preload="auto" crossorigin="anonymous"></audio>
+      <audio id="sfx-key" src="audio/SoundQ Audio/UI_Correct_button3.wav" preload="auto"
+        crossorigin="anonymous"></audio>
+
+      <!-- 3D Models -->
+      <a-asset-item id="cage-closed-glb" src="models/CageWithBirb.glb"></a-asset-item>
+      <a-asset-item id="cage-open-glb" src="models/BirdCageOpen.glb"></a-asset-item>
+      <!-- Assuming cage-open might use the same mtl or none for now. If it needs one, we might need to add it later. -->
+
+      <a-asset-item id="bird-flying-glb" src="models/FlyingBirbWithoutKey.glb"></a-asset-item>
+      <a-asset-item id="key-glb" src="models/SoloKey.glb"></a-asset-item>
+      <a-asset-item id="padlock-glb" src="models/PadLock.glb"></a-asset-item>
+
+      <!-- Icons -->
+      <img id="icon-flower" src="img/flower.png">
+      <img id="icon-bird" src="img/bird.png">
+      <img id="icon-sun" src="img/sun.png">
+    </a-assets>
+
+    <!-- 
+      360° sky sphere wrapping the panorama around the user
+    -->
+    <a-sky src="#aviaryPanorama" rotation="0 -130 0"></a-sky>
+
+    <!-- Models -->
+
+    <!-- Cage Group -->
+    <a-entity position="-1 1.32 -0.28" layout-item="name: Cage Group">
+
+      <!-- Closed Cage (Initial State) -->
+      <a-entity id="cage-closed" gltf-model="#cage-closed-glb" position="-0.2 -0.15 -0.1" rotation="0 100 0"
+        scale="0.002 0.002 0.002" layout-item="name: Cage Closed">
+
+        <!-- Padlock attached to Cage -->
+        <!-- Adjusted position/scale relative to parent cage -->
+        <a-entity id="padlock" gltf-model="#padlock-glb" position="130 -430 -50" rotation="0 -50 0" scale="2.5 2.5 2.5"
+          layout-item="name: Padlock">
+
+          <!-- Icons (Non-clickable) -->
+          <a-image id="img-flower" src="#icon-flower" position="46.7 248.7 169" rotation="-15 10 0" scale="4.5 4.5 4.5"
+            layout-item="name: Icon Flower"></a-image>
+
+          <a-image id="img-bird" src="#icon-bird" position="55.5 248.7 170" rotation="-15 14 -2" scale="4.5 4.5 4.5"
+            layout-item="name: Icon Bird"></a-image>
+
+          <a-image id="img-sun" src="#icon-sun" position="64.4 249 175" rotation="5 1 0" scale="4 4 4"
+            layout-item="name: Icon Sun"></a-image>
+
+          <!-- Digit 1 -->
+          <a-text id="digit1" value="0" align="center" position="46.7 239 169" rotation="-15 15 0" scale="11 14 15"
+            color="black" geometry="primitive: plane; width: 0.5; height: 0.8" material="color: #fff3c2; opacity: 10"
+            class="clickable" layout-item="name: Digit 1">
+          </a-text>
+
+          <!-- Digit 2 -->
+          <a-text id="digit2" value="0" align="center" position="55.5 239.4 170" rotation="-15 14 -2" scale="10.2 14 14"
+            color="black" geometry="primitive: plane; width: 0.5; height: 0.8" material="color: #fff3c2; opacity: 10"
+            class="clickable" layout-item="name: Digit 2">
+          </a-text>
+
+          <!-- Digit 3 -->
+          <a-text id="digit3" value="0" align="center" position="64.4 240.3 175" rotation="5 1 0" scale="10 13 13"
+            color="black" geometry="primitive: plane; width: 0.5; height: 0.8" material="color: #fff3c2; opacity: 10"
+            class="clickable" layout-item="name: Digit 3">
+          </a-text>
+        </a-entity>
+      </a-entity>
+
+      <!-- Open Cage (Hidden initially) -->
+      <a-entity id="cage-open" gltf-model="#cage-open-glb" position="-0.2 -0.15 -0.1" rotation="0 100 0"
+        scale="0.002 0.002 0.002" visible="false" layout-item="name: Cage Open">
+      </a-entity>
+    </a-entity>
+
+    <!-- Bird Flying Rig (Orbit Animation) - Hidden initially -->
+    <a-entity id="bird-rig" position="0 1.75 0" visible="false"
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 25000; easing: linear" layout-item="name: Bird Rig">
+
+      <a-entity id="bird-fly" gltf-model="#bird-flying-glb" position="0 0.5 -0.75" rotation="0 0 0"
+        scale="0.03 0.03 0.03" layout-item="name: Bird Flying">
+
+        <!-- Key attached to bird (Child of bird-fly) -->
+        <a-entity id="key-entity" gltf-model="#key-glb" position="300 1000 -800" rotation="0 5 0" scale="20 20 20"
+          layout-item="name: Key on Bird">
+          <!-- Large Invisible Collider Box for easier clicking -->
+          <a-entity id="key-collider" geometry="primitive: box; width: 3; height: 3; depth: 3"
+            material="opacity: 0; transparent: true" class="clickable" layout-item="name: Key Collider"
+            position="130 50 10" rotation="0 0 0" scale="20 5 8">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!-- Door Collider (Invisible) -->
+    <a-entity id="door-collider" geometry="primitive: plane; width: 1.5; height: 2.5"
+      material="opacity: 0; transparent: true; side: double" position="1.2 -2 20" rotation="0 -10 0" scale="4.8 7.3 2"
+      class="clickable" layout-item="name: Door Collider">
+    </a-entity>
+
+    <!-- 
+      Player camera with device-orientation controls for mobile
+    -->
+    <a-entity id="playerCamera" camera
+      look-controls="magicWindowTrackingEnabled: true; touchEnabled: false; mouseEnabled: true"
+      wasd-controls="enabled: false" position="0 1.6 0">
+
+      <!-- Cursor for interaction -->
+      <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable">
+      </a-entity>
+    </a-entity>
+
+    <!-- 
+      Background music entity
+    -->
+    <a-entity id="bgmEntity"
+      sound="src: #bgmAudio; autoplay: false; loop: true; volume: 0.3; positional: false"></a-entity>
+  </a-scene>
+
+  <!-- 
+    HTML Overlay - UI controls outside the A-Frame scene
+  -->
+
+  <!-- Inventory HUD -->
+  <div id="inventoryHud" class="inventory-hud">
+    <div id="keySlot" class="inventory-slot hidden">
+      <svg width="30" height="30" viewBox="0 0 50 50">
+        <circle cx="15" cy="15" r="6" fill="none" stroke="#050203" stroke-width="2" />
+        <line x1="19" y1="15" x2="35" y2="15" stroke="#050203" stroke-width="2" />
+        <line x1="28" y1="12" x2="28" y2="18" stroke="#050203" stroke-width="2" />
+        <line x1="32" y1="12" x2="32" y2="18" stroke="#050203" stroke-width="2" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Instruction card overlay - shown before user interaction -->
+  <div id="startOverlay" class="overlay">
+    <div class="instruction-card">
+      <!-- Decorative SVG doodles in corners -->
+      <svg class="doodle doodle-top-left" width="40" height="40" viewBox="0 0 40 40">
+        <path d="M10,15 Q15,10 20,15 T30,15" fill="none" stroke="#050203" stroke-width="1.5" />
+        <circle cx="20" cy="20" r="3" fill="none" stroke="#050203" stroke-width="1.5" />
+      </svg>
+
+      <svg class="doodle doodle-bottom-right" width="50" height="50" viewBox="0 0 50 50">
+        <!-- Simple key outline -->
+        <circle cx="15" cy="15" r="6" fill="none" stroke="#050203" stroke-width="1.5" />
+        <line x1="19" y1="15" x2="35" y2="15" stroke="#050203" stroke-width="1.5" />
+        <line x1="28" y1="12" x2="28" y2="18" stroke="#050203" stroke-width="1.5" />
+        <line x1="32" y1="12" x2="32" y2="18" stroke="#050203" stroke-width="1.5" />
+      </svg>
+
+      <!-- Instruction content -->
+      <h1 class="card-header">Welcome to The Aviary</h1>
+      <p class="card-subheader">A hand-drawn escape room by JAN Scape</p>
+
+      <div class="card-section">
+        <h2 class="section-title">Objective</h2>
+        <p class="section-body">Find the key hidden in the aviary and use it to unlock the exit door.</p>
+      </div>
+
+      <div class="card-section">
+        <h2 class="section-title">How to play</h2>
+        <!-- Updated instructions: less spoiler-y, emphasizes device movement on mobile -->
+        <ul class="instructions-list">
+          <li>Move your device to look around the aviary.</li>
+          <li>Notice which objects glow or react as you explore.</li>
+          <li>Tap anything that feels important or out of place.</li>
+          <li>Pay attention to what changes in the room – it may help you find a way out.</li>
+        </ul>
+      </div>
+
+      <p class="card-tip">Tip: Turn on your sound for ambient music and subtle cues.</p>
+
+      <button id="startButton" class="start-button">Start Experience</button>
+    </div>
+  </div>
+
+  <!-- Win Overlay -->
+  <div id="winOverlay" class="overlay hidden">
+    <div class="instruction-card win-content">
+      <svg class="doodle doodle-top-left" width="40" height="40" viewBox="0 0 40 40">
+        <path d="M10,15 Q15,10 20,15 T30,15" fill="none" stroke="#050203" stroke-width="1.5" />
+        <circle cx="20" cy="20" r="3" fill="none" stroke="#050203" stroke-width="1.5" />
+      </svg>
+
+      <h1 class="win-title">You Escaped!</h1>
+      <p class="section-body">You found the key and unlocked the door.</p>
+      <br>
+      <p class="card-subheader">Thanks for playing The Aviary.</p>
+
+      <button onclick="location.reload()" class="start-button">Play Again</button>
+    </div>
+  </div>
+
+  <!-- Music toggle - always visible in corner (hidden until experience starts) -->
+  <button id="musicToggle" class="music-toggle" style="display: none;">🎵 On</button>
+
+  <!-- Custom JavaScript (for future interactions) -->
+  <script src="main.js"></script>
+</body>
+
+</html>

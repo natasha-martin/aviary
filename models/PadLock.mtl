@@ -1,0 +1,68 @@
+newmtl CubeFBXASC046001SG
+illum 4
+Kd 0.05 0.66 0.80
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.01 0.16 0.20
+Ns 41.56
+newmtl CubeFBXASC046002SG
+illum 4
+Kd 0.75 0.80 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.19 0.20 0.00
+Ns 41.56
+newmtl CubeFBXASC046003SG1
+illum 4
+Kd 0.80 0.80 0.80
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 41.56
+newmtl CubeSG2
+illum 4
+Kd 0.80 0.19 0.59
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.05 0.15
+Ns 41.56
+newmtl CubeSG3
+illum 4
+Kd 0.08 0.77 0.89
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.02 0.19 0.22
+Ns 41.56
+newmtl SphereFBXASC046003SG1
+illum 4
+Kd 0.01 0.01 0.01
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 63.02
+newmtl initialShadingGroup
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+newmtl lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd BirdCage_initialShadingGroup_BaseColor.1001.png
+Ni 1.00
+newmtl lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Pad_Lock_initialShadingGroup_BaseColor.1001.png
+Ni 1.00

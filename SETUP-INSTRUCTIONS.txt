@@ -1,0 +1,49 @@
+================================================================================
+AVIARY ESCAPE ROOM - SETUP INSTRUCTIONS
+================================================================================
+
+Your screen is BLACK because the panorama image is missing!
+
+REQUIRED FILES TO ADD:
+----------------------
+
+1. PANORAMA IMAGE (REQUIRED NOW):
+   Place your file here: assets/panorama-aviary-2.jpg
+   
+   Current file name: "panorama aviary 2.jpg"
+   Rename to: "panorama-aviary-2.jpg" (replace spaces with hyphens)
+   
+   OR keep the original name and update index.html line 23 to:
+   <img id="aviaryPanorama" src="assets/panorama%20aviary%202.jpg">
+
+2. BACKGROUND MUSIC (ADD IN NEXT STEP):
+   Place your file here: audio/elevator-jazz-lounge-music-412339.mp3
+   (Don't add this yet - we'll implement audio in the next step)
+
+FOLDER STRUCTURE:
+-----------------
+Aviary/
+├── index.html          ✓ Created
+├── styles.css          ✓ Created  
+├── main.js             ✓ Created
+├── assets/             ✓ Folder exists (EMPTY - add panorama here!)
+│   └── panorama-aviary-2.jpg  ✗ MISSING - ADD THIS FILE
+└── audio/              ✓ Folder exists (empty for now)
+    └── elevator-jazz-lounge-music-412339.mp3  (add later)
+
+HOW TO TEST:
+------------
+1. Add your panorama image to assets/ folder (see above)
+2. Open index.html in a web browser
+3. Check the browser console (F12) for helpful debug messages
+4. You should see the 360° panorama instead of a black screen
+5. Drag with mouse to look around
+
+DEBUGGING:
+----------
+Open browser console (F12 > Console tab) to see:
+- "✓ Aviary scene loaded successfully" = A-Frame is working
+- "✓ Panorama image loaded" = Your image loaded correctly
+- "✗ Panorama image failed to load" = Image path is wrong or file missing
+
+================================================================================
