@@ -29,7 +29,8 @@ const LayoutManager = {
   init: function () {
     console.log('Initializing Layout Manager...');
     this.gui = new lil.GUI({ title: 'Layout Manager' });
-    this.gui.close(); // Start closed to not obstruct view
+    this.gui.close(); // Start closed
+    this.gui.hide(); // Hide completely by default (User request)
 
     // Add a button to print all configurations
     const config = {
@@ -68,9 +69,6 @@ const LayoutManager = {
     // Scale
     folder.add(obj, 'scaleX').onChange(v => {
       el.object3D.scale.x = v;
-      // Optional: Uniform scaling convenience
-      // obj.scaleY = v; obj.scaleZ = v; 
-      // el.object3D.scale.set(v, v, v);
     }).name('Scale X').step(0.001);
     folder.add(obj, 'scaleY').onChange(v => el.object3D.scale.y = v).name('Scale Y').step(0.001);
     folder.add(obj, 'scaleZ').onChange(v => el.object3D.scale.z = v).name('Scale Z').step(0.001);

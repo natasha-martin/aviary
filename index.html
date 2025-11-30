@@ -13,6 +13,7 @@
   <!-- lil-gui for layout tool -->
   <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.19.1/dist/lil-gui.umd.min.js"></script>
 
+
   <!-- Custom styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -61,67 +62,64 @@
     <!-- Models -->
 
     <!-- Cage Group -->
-    <a-entity position="-1 1.32 -0.28" layout-item="name: Cage Group">
+    <a-entity position="-1 1.32 -0.28">
 
       <!-- Closed Cage (Initial State) -->
       <a-entity id="cage-closed" gltf-model="#cage-closed-glb" position="-0.2 -0.15 -0.1" rotation="0 100 0"
-        scale="0.002 0.002 0.002" layout-item="name: Cage Closed">
+        scale="0.002 0.002 0.002">
 
         <!-- Padlock attached to Cage -->
         <!-- Adjusted position/scale relative to parent cage -->
-        <a-entity id="padlock" gltf-model="#padlock-glb" position="130 -430 -50" rotation="0 -50 0" scale="2.5 2.5 2.5"
-          layout-item="name: Padlock">
+        <a-entity id="padlock" gltf-model="#padlock-glb" position="130 -430 -50" rotation="0 -50 0" scale="2.5 2.5 2.5">
 
           <!-- Icons (Non-clickable) -->
-          <a-image id="img-flower" src="#icon-flower" position="46.7 248.7 169" rotation="-15 10 0" scale="4.5 4.5 4.5"
-            layout-item="name: Icon Flower"></a-image>
+          <a-image id="img-flower" src="#icon-flower" position="46.7 248.7 169" rotation="-15 10 0"
+            scale="4.5 4.5 4.5"></a-image>
 
-          <a-image id="img-bird" src="#icon-bird" position="55.5 248.7 170" rotation="-15 14 -2" scale="4.5 4.5 4.5"
-            layout-item="name: Icon Bird"></a-image>
+          <a-image id="img-bird" src="#icon-bird" position="55.5 248.7 170" rotation="-15 14 -2"
+            scale="4.5 4.5 4.5"></a-image>
 
-          <a-image id="img-sun" src="#icon-sun" position="64.4 249 175" rotation="5 1 0" scale="4 4 4"
-            layout-item="name: Icon Sun"></a-image>
+          <a-image id="img-sun" src="#icon-sun" position="64.4 249 175" rotation="5 1 0" scale="4 4 4"></a-image>
 
           <!-- Digit 1 -->
           <a-text id="digit1" value="0" align="center" position="46.7 239 169" rotation="-15 15 0" scale="11 14 15"
             color="black" geometry="primitive: plane; width: 0.5; height: 0.8" material="color: #fff3c2; opacity: 10"
-            class="clickable" layout-item="name: Digit 1">
+            class="clickable">
           </a-text>
 
           <!-- Digit 2 -->
           <a-text id="digit2" value="0" align="center" position="55.5 239.4 170" rotation="-15 14 -2" scale="10.2 14 14"
             color="black" geometry="primitive: plane; width: 0.5; height: 0.8" material="color: #fff3c2; opacity: 10"
-            class="clickable" layout-item="name: Digit 2">
+            class="clickable">
           </a-text>
 
           <!-- Digit 3 -->
           <a-text id="digit3" value="0" align="center" position="64.4 240.3 175" rotation="5 1 0" scale="10 13 13"
             color="black" geometry="primitive: plane; width: 0.5; height: 0.8" material="color: #fff3c2; opacity: 10"
-            class="clickable" layout-item="name: Digit 3">
+            class="clickable">
           </a-text>
         </a-entity>
       </a-entity>
 
       <!-- Open Cage (Hidden initially) -->
       <a-entity id="cage-open" gltf-model="#cage-open-glb" position="-0.2 -0.15 -0.1" rotation="0 100 0"
-        scale="0.002 0.002 0.002" visible="false" layout-item="name: Cage Open">
+        scale="0.002 0.002 0.002" visible="false">
       </a-entity>
     </a-entity>
 
     <!-- Bird Flying Rig (Orbit Animation) - Hidden initially -->
     <a-entity id="bird-rig" position="0 1.75 0" visible="false"
-      animation="property: rotation; to: 0 -360 0; loop: true; dur: 25000; easing: linear" layout-item="name: Bird Rig">
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 25000; easing: linear">
 
       <a-entity id="bird-fly" gltf-model="#bird-flying-glb" position="0 0.5 -0.75" rotation="0 0 0"
-        scale="0.03 0.03 0.03" layout-item="name: Bird Flying">
+        scale="0.03 0.03 0.03">
 
         <!-- Key attached to bird (Child of bird-fly) -->
-        <a-entity id="key-entity" gltf-model="#key-glb" position="300 1000 -800" rotation="0 5 0" scale="20 20 20"
-          layout-item="name: Key on Bird">
+        <a-entity id="key-entity" gltf-model="#key-glb" position="300 1000 -800" rotation="0 5 0" scale="20 20 20">
           <!-- Large Invisible Collider Box for easier clicking -->
           <a-entity id="key-collider" geometry="primitive: box; width: 3; height: 3; depth: 3"
-            material="opacity: 0; transparent: true" class="clickable" layout-item="name: Key Collider"
-            position="130 50 10" rotation="0 0 0" scale="20 5 8">
+            material="opacity: 0; transparent: true" class="clickable" position="130 50 10" rotation="0 0 0"
+            scale="20 5 8">
           </a-entity>
         </a-entity>
       </a-entity>
@@ -130,7 +128,7 @@
     <!-- Door Collider (Invisible) -->
     <a-entity id="door-collider" geometry="primitive: plane; width: 1.5; height: 2.5"
       material="opacity: 0; transparent: true; side: double" position="1.2 -2 20" rotation="0 -10 0" scale="4.8 7.3 2"
-      class="clickable" layout-item="name: Door Collider">
+      class="clickable">
     </a-entity>
 
     <!-- 
